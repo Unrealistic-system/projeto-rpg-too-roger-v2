@@ -1,6 +1,7 @@
 from model.Status import Status_Missao
+from abc import ABC, abstractmethod
 
-class Missao: # começar classe com maiusculo - convenção python
+class Missao(ABC): # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
         self._nome = None
         self._descricao = None
@@ -74,7 +75,10 @@ class Missao: # começar classe com maiusculo - convenção python
             self.status = Status_Missao.EM_ANDAMENTO
             print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
 
+    @abstractmethod
     def concluir_missao (self, valor):
+        pass
+    '''       # testar dps
             if self.status == Status_Missao.CONCLUIDA:
                 return(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
             elif self.status == Status_Missao.FRACASSADA:
@@ -82,13 +86,15 @@ class Missao: # começar classe com maiusculo - convenção python
                        " concluir novamente.")
             elif self.status == Status_Missao.PENDENTE:
                 return(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
-        
+    '''
+    @abstractmethod
     def exibir_dados(self):
         return (f"{self.__class__.__name__}\n"
                 f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
                 f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
                 f"Status: {self.status.name}\n")
-       
+    
+    @abstractmethod
     def __str__(self):
         return (f"{self.__class__.__name__}: {self.nome} ({self.descricao}) "
                 f"XP:[{self.recompensa}] [{self.status.value}]")

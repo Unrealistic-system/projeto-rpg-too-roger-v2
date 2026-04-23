@@ -35,12 +35,12 @@ class MissaoColeta (Missao):
             if isinstance(valor, int):
                 if valor >= self.quantidade:
                     self.status = Status_Missao.CONCLUIDA
-                    print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                    return(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
                         f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
                 else:
-                    print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
-                          f"não foi atingida. Faltam {self.quantidade-valor}")
                     self.status = Status_Missao.FRACASSADA
+                    return(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
+                          f"não foi atingida. Faltam {self.quantidade-valor}")
             else:
                 return(f"Tipo de dado inválido!!")
         
