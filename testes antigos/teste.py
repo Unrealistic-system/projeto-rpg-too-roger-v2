@@ -3,7 +3,7 @@ from model.missao import Missao
 #from model.Missao_combate import MissaoCombate
 #from model.Missao_exploracao import MisssaoExploracao
 from personagem import Personagem
-from entradas_imput import entrada_missao, entrada_personagem
+from outro.entradas_imput import entrada_missao, entrada_personagem
 
 ms = entrada_missao() # digitar missão
 #ms = missao("Do Disapered Demons See God?", "Determine de cause of the disapperances from the Oni tribe", 50)

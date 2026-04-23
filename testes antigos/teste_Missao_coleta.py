@@ -1,5 +1,5 @@
 from model.missao import Missao
-from model.Misao_coleta import MissaoColeta
+from model.Missao_coleta import MissaoColeta
 from model.Status import Status_Missao
 
 msco = MissaoColeta("Coletar frutas", "Colete maças", 40,"Macas", 10)

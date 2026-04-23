@@ -48,24 +48,33 @@ class MisssaoExploracao (Missao):
         str += (f"Regiao destino: {self.local}\n"
                 f"Distancia: {self.distancia} Km\n"
                 f"Tempo limite: {self.tempo} Minutos\n{'='*30}")
-        return str
-    '''
-        return (f"{'='*30}\n--- MISSÃO DE COMBATE: ---"
-                f"\nNome da Missão: {self.nome}\n"
-                f"Descrição: {self.descricao}\n"
-                f"Recompensa: {self.recompensa} XP\n"
-                f"Status: {self.status.name}\n"
-    '''            
+        return str           
+
+    def concluir_missao (self, valor):
+            super().concluir_missao(valor)
+            if isinstance(valor, int):
+                if valor >= self.distancia:
+                    self.status = Status_Missao.CONCLUIDA
+                    print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                        f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
+                else:
+                    print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.distancia} "
+                          f"não foi atingida. Faltam {self.distancia-valor}")
+                    self.status = Status_Missao.FRACASSADA
+            else:
+                return(f"Tipo de dado inválido!!")
 
     def __str__(self):
-        return (f"{self.nome} ({self.descricao}) XP:[{self.recompensa}]"
-                f"[{self.status.value}], em: {self.local} - {self.distancia} Km - {self.tempo} min.")
+        str = super().__str__()
+        str += f", em: {self.local} - {self.distancia} Km - {self.tempo} min."
+        return str
    
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, MisssaoExploracao):
             return False
-        return (self.nome == outro.nome and self.descricao == outro.descricao 
-                and self.recompensa == outro.recompensa and self.status == outro.status
+        return (self.nome == outro.nome 
+                and self.descricao == outro.descricao 
+                and self.recompensa == outro.recompensa 
                 and self.local == outro.local 
                 and self.distancia == outro.distancia
                 and self.tempo == outro.tempo)

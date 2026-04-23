@@ -56,16 +56,6 @@ class Missao: # começar classe com maiusculo - convenção python
     def status(self, n_st):
         if isinstance(n_st, Status_Missao):
             self._status = n_st
-            ''' # removido pois aqui aceitaria str e converteria para o tipo do status,
-                # mas não é permitido na descrição do trabalho.
-                # Para aceitar str é só retirar o comentário e acertar a tabulação
-                return
-            if isinstance(n_st, str):
-                try:
-                    self._status = Status_Missao[n_st.upper()]
-                except KeyError:# o que é: try to access a dictionary using a key that does not exist in that dictionary
-                    raise ValueError(f"'{n_st}' não é um Status válido.")
-            '''
         else:
             raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
 
@@ -85,36 +75,28 @@ class Missao: # começar classe com maiusculo - convenção python
             print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
 
     def concluir_missao (self, valor):
-        pass
-    '''
-    if self.status == Status_Missao.CONCLUIDA:
-            print(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
-            return
-        elif self.status == Status_Missao.FRACASSADA:
-            print(f"Missão '{self.nome}' Já foi Terminada com Fracasso, não é possivel concluir novamente.")
-            return
-        elif self.status == Status_Missao.PENDENTE:
-            print(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
-            return
-        else:
-            # projetar possibilidade de fracasso dps
-            self.status = Status_Missao.CONCLUIDA
-            print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
-                  f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
-    '''
+            if self.status == Status_Missao.CONCLUIDA:
+                return(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")
+            elif self.status == Status_Missao.FRACASSADA:
+                return(f"Missão '{self.nome}' Já foi Terminada com Fracasso, não é possivel"
+                       " concluir novamente.")
+            elif self.status == Status_Missao.PENDENTE:
+                return(f"Missão '{self.nome}' não foi iniciada, não é possivel finalizar.")
         
     def exibir_dados(self):
         return (f"{self.__class__.__name__}\n"
                 f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
                 f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
                 f"Status: {self.status.name}\n")
-
        
     def __str__(self):
-        return f"{self.__class__.__name__}: {self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]"
+        return (f"{self.__class__.__name__}: {self.nome} ({self.descricao}) "
+                f"XP:[{self.recompensa}] [{self.status.value}]")
    
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, Missao):
             return False
-        return self.nome == outro.nome and self.descricao == outro.descricao and self.recompensa == outro.recompensa and self.status == outro.status
+        return (self.nome == outro.nome 
+                and self.descricao == outro.descricao 
+                and self.recompensa == outro.recompensa)
     
