@@ -1,22 +1,9 @@
 from model.missao import Missao
-from personagem import Personagem
+from model.personagem import Personagem
 from model.Missao_coleta import MissaoColeta
 from model.Missao_combate import MissaoCombate
 
 #ms1= Missao("a", "a", 15)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

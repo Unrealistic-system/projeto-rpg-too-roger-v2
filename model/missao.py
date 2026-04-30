@@ -5,7 +5,7 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
         self._nome = None
         self._descricao = None
-        self._recompensa = None
+        self._recompensa = 0
         
         self.nome = nome
         self.descricao = descricao

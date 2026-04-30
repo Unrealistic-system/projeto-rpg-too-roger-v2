@@ -1,5 +1,5 @@
 from model.missao import Missao
-from personagem import Personagem
+from model.personagem import Personagem
 
 def entrada_missao() -> Missao:
     while True:

@@ -2,7 +2,7 @@ from model.missao import Missao
 #from model.Misao_coleta import MissaoColeta
 #from model.Missao_combate import MissaoCombate
 #from model.Missao_exploracao import MisssaoExploracao
-from personagem import Personagem
+from model.personagem import Personagem
 from outro.entradas_imput import entrada_missao, entrada_personagem
 
 ms = entrada_missao() # digitar missão
