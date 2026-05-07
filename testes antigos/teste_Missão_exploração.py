@@ -1,5 +1,5 @@
 from model.Missao_exploracao import MisssaoExploracao
-from model.Status import Status_Missao
+from model.enums import Status_Missao
 
 msexp = MisssaoExploracao("Andando em meio as pedras", "Explorar a região", 45, "Matil", 1.78, 50, Status_Missao.EM_ANDAMENTO)
 msexp2 = MisssaoExploracao("Caminho dos rios", "Explorar a região", 45, "Kaulium", 2.78, 50, Status_Missao.FRACASSADA)

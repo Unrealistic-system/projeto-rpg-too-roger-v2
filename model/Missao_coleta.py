@@ -1,4 +1,4 @@
-from model.Status import Status_Missao
+from model.enums import Status_Missao
 from model.missao import Missao
 
 class MissaoColeta (Missao):

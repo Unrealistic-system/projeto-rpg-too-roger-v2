@@ -1,6 +1,6 @@
 from model.missao import Missao
 from model.Missao_combate import MissaoCombate
-from model.Status import Status_Missao
+from model.enums import Status_Missao
 
 mscomb1 = MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin")
 mscomb2 = MissaoCombate("Derrotar Grifo", "Derrote os grifos da arena", 30, 20,"Grifo", Status_Missao.FRACASSADA)

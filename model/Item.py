@@ -1,15 +1,15 @@
-from model.Tipo_Item import Tipo_item
+from model.enums import Tipo_item
 
 class Item():
-    def __init__(self, nome,descricao, valor_efeito, tipo= Tipo_item):
+    def __init__(self, nome,descricao, valor_efeito, tipo: Tipo_item):
         self.nome = nome
-        self.__descricao = descricao
-        self.__valor_efeito = valor_efeito
+        self.descricao = descricao
+        self.valor_efeito = valor_efeito
         self.__tipo = tipo
 
     @property
     def nome(self):
-        return self.nome
+        return self._nome
     @property
     def descricao(self):
         return self.__descricao
@@ -42,7 +42,13 @@ class Item():
     @valor_efeito.setter
     def valor_efeito(self, n_valor):
         if not isinstance(n_valor, int):
-            raise TypeError("Recompensa precisa ser número inteiro.")
-        if 0 <= n_valor > 50:
-            raise Exception ("Recompensa precisa ser positiva e menor que 50!!!")
+            raise TypeError("Valor de efeito precisa ser número inteiro.")
+        if n_valor < 0 or n_valor > 50:
+            raise Exception ("Valor de efeito precisa ser positiva e menor que 50!!!")
         self.__valor_efeito = n_valor
+
+    def __str__(self) -> str:
+        return f"[{self.nome}], {self.valor_efeito}, {self.descricao},"
+    
+    def exibir_dados(self) -> str:
+        return f"{self.tipo.name}: [{self.nome}], {self.valor_efeito}, {self.descricao},"
