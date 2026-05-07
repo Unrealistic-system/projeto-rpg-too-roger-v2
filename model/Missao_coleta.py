@@ -40,7 +40,7 @@ class MissaoColeta (Missao):
                 else:
                     self.status = Status_Missao.FRACASSADA
                     return(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
-                          f"não foi atingida. Faltam {self.quantidade-valor}")
+                           f"não foi atingida. Faltam {self.quantidade-valor}")
             else:
                 return(f"Tipo de dado inválido!!")
         

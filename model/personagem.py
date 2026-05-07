@@ -1,6 +1,6 @@
 from model.missao import Missao
 from model.enums import Status_Missao
-from model.item import Item
+from model.Item import Item
 from model.geral import *
 from model.enums import Tipo_item
 
@@ -124,10 +124,11 @@ class Personagem:
             self.__inventario.remove(item)
             return(f"Item removido do inventário!!")
         else:
-            return(f"Item não encontrado!!")
+            return(f"Item não encontrado no inventário!!")
         
     def equipar_itens(self):
-        while self.__arma_equipada == None or self.vestimenta_equipada == None or self.utilitario_equipado == None:
+        # while self.__arma_equipada == None or self.vestimenta_equipada == None or self.utilitario_equipado == None:
+        while True:
             limpar_terminal()
             print(self.mostrar_inventario())
             try:
@@ -145,7 +146,11 @@ class Personagem:
                 return f"Item equipado com sucesso!!!"
             except IndexError or ValueError:
                 print(f"item digitado não existe!")
-                os.system('pause')
+                pausa()
+    def desequipar(self):
+        self.__arma_equipada = None
+        self.__vestimenta_equipada = None
+        self.__utilitario_equipado = None
 
     def mostrar_itens_equipados(self):
         msg = f"\n-- Itens Equipados de [{self.nome}]: --\n"
@@ -157,16 +162,6 @@ class Personagem:
         msg += (f"Utilitário: "
                 f"{self.__utilitario_equipado if self.__utilitario_equipado is not None else e}\n")
         return msg
-
-
-
-
-    
-
-
-
-
-
 
 ## padrão
     def exibir_dados(self):

@@ -3,16 +3,25 @@ from model.personagem import Personagem
 from model.Missao_coleta import MissaoColeta
 from model.Missao_combate import MissaoCombate
 from model.Missao_exploracao import MisssaoExploracao
-from model.item import Item
+from model.Item import Item
 from model.enums import Tipo_item
 from model.geral import *
+from tkinter import messagebox
 
-msco = MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10)
-msco2 = MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10)
-mscomb1 = MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin")
+# criar listas de missões e personagens
+lista_Personagens: list[Personagem] = []
+lista_Missoes: list[Missao] = []
+
+
+#msco = MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10)
+#msco2 = MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10)
+#mscomb1 = MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin")
 item_1 = Item("Espada de Edward", "espada que pertencia a um antigo pirata", 40, Tipo_item.ARMA)
 item_2 = Item("Capacete de Comerciante", "capacete formal usado por comerciantes", 10, Tipo_item.VESTIMENTA)
 item_3 = Item("Espelho Miraculoso", "espelho que aumenta a vida de quem o equipa", 30, Tipo_item.UTILITARIO)
+
+lista_Missoes.append(MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10))
+lista_Missoes.append(MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin"))
 
 ps = Personagem("Milena")
 
@@ -23,30 +32,31 @@ while menu != 0:
         f"0 - sair\n"
         f"1 - Criar Personagem\n"
         f"2 - Mostrar Personagem\n"
-        f"3 - Criar Missão\n"
-        f"4 - Mostrar missão\n"
-        f"5 - Atribuir Missão\n"
-        f"6 - Concluir Misão\n"
-        f"7 - Equipar Personagem\n"
-        f"8 - Mostrar Inventário\n"
-        f"9 - Mostrar Missões\n"
+        f"3 - listar Missões\n"
+        f"4 - Mostrar Inventário\n"
         f"Escolha: "
     ))
     match menu:
         case 0:
             print("\nSaindo...\n")
         case 1:
-            print("\nNAO IMPLEMENTADO\n")
+            nome_personagem = input("Digite o nome do novo personagem a ser criado: ")
+            novo_personagem = Personagem(nome_personagem)
+            lista_Personagens.append(novo_personagem)
         case 2:
-           print(ps.exibir_dados())
+           msg = f"Personagens:\n"
+           for i, valor in enumerate(lista_Personagens):
+                msg += f"{i+1} - {valor}\n"
+           print(msg)
         case 3:
-            pass
+            msg = f"Misões Disponíveis:\n"
+            for i, valor in enumerate(lista_Missoes):
+                    msg += f"{i+1} - {valor}\n"
+            print(msg)
+            pausa()
+            messagebox.askquestion("diálogo", "Atribuir Misão a algum personagem?")
         case 4:
             pass
-        case 5:
-            print(ps.add_missao(msco))
-            print(ps.add_missao(msco2))
-            print(ps.add_missao(mscomb1))
         case 6:
             try:
                 ps.concluir_missao(msco, 9)

@@ -22,3 +22,6 @@ precisa verificar com isinstance p/ bloquear testes entre tipos diferentes (str 
     def nome(self, novo_nome):
         # testes aqui
         self._nome = novo_nome
+
+
+github prof: [link](https://github.com/ProfVanessa-IFSUL/TOO-RPG-2026-1)
