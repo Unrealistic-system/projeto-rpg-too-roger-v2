@@ -8,7 +8,7 @@ from model.enums import Tipo_item
 from model.geral import *
 from tkinter import messagebox
 
-# criar listas de missões e personagens
+# criar listas de missões e personagens para o jogo
 lista_Personagens: list[Personagem] = []
 lista_Missoes: list[Missao] = []
 
@@ -31,7 +31,7 @@ while menu != 0:
     menu = int(input(
         f"0 - sair\n"
         f"1 - Criar Personagem\n"
-        f"2 - Mostrar Personagem\n"
+        f"2 - Mostrar Personagens\n"
         f"3 - listar Missões\n"
         f"4 - Mostrar Inventário\n"
         f"Escolha: "
