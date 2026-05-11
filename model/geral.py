@@ -49,6 +49,8 @@ def mostrar_lista(lista_origem: list, texto_saida = "Lista", iniciar_em = 0):
     Returns:
         str: título seguido da lista.
     '''
+    if len(lista_origem) == 0:
+        return f"{texto_saida}: Vazio(a)"
     msg = f"\n{texto_saida}:\n"
     for i, valor in enumerate(lista_origem, iniciar_em):
         msg += f"{i} - {valor}\n"

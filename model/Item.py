@@ -48,7 +48,12 @@ class Item():
         self.__valor_efeito = n_valor
 
     def __str__(self) -> str:
-        return f"[{self.nome}], {self.valor_efeito}, {self.descricao},"
+        return f"[{self.nome}], {self.valor_efeito}, {self.descricao}"
     
     def exibir_dados(self) -> str:
-        return f"{self.tipo.name}: [{self.nome}], {self.valor_efeito}, {self.descricao},"
+        return f"{self.tipo.name}: [{self.nome}], {self.valor_efeito}, {self.descricao}"
+    
+    def __eq__(self, outro:object) -> bool:
+        if not isinstance(outro, Item):
+            return False
+        return (self.nome == outro.nome)

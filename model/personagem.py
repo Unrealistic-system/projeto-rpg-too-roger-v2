@@ -85,10 +85,8 @@ class Personagem:
         return(f"Misão atribuida a personagem!!!")
     
     def listar_Missao(self):
-        msg = f"Lista de missões do personagem [{self.nome}]:\n"
-        for item in self.missoes:
-            msg += f"{item}\n"
-        return msg
+        return mostrar_lista(self.missoes, f"Lista de missões do personagem [{self.nome}]", 1)
+        
 
     def concluir_missao(self, missao: Missao, valor):
             for m in self.__misoes:
@@ -106,10 +104,7 @@ class Personagem:
             raise ValueError("Missão não encontrada")
 
     def mostrar_inventario(self):
-        msg = f"--Itens no Inventário de [{self.nome}] :--\n"
-        for i, valor in enumerate(self.__inventario):
-            msg += f"{i} - {valor.exibir_dados()}\n"
-        return msg
+        return mostrar_lista(self.inventario, f"Itens no Inventário de [{self.nome}]", 1)
 
     def add_item(self, item):
         if not isinstance(item, Item):
@@ -169,7 +164,12 @@ class Personagem:
                 f"Nome: {self.nome}\n"
                 f"Nível: {self.nivel}\n"
                 f"HP: {self.vida}\n"
-                f"XP: {self.xp}\n{'='*30}")
+                f"XP: {self.xp}\n"
+                f"ATK base: {self.ataque_base}\n"
+                f"Arma: {self.arma_equipada if self.arma_equipada is not None else 'Desequipado'}\n"
+                f"Vestimenta: {self.vestimenta_equipada if self.vestimenta_equipada is not None else 'Desequipado'}\n"
+                f"Utilitário: {self.utilitario_equipado if self.utilitario_equipado is not None else 'Desequipado'}\n"
+                f"{'='*30}")
     
     def __str__(self):
         return (f" --{self.nome} LV:{self.nivel}"
