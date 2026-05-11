@@ -124,6 +124,19 @@ while menu != 0:
 
             if isinstance(personagem_padrao, Personagem):
                 print(personagem_padrao.listar_Missao())
+                try:
+                    sel = int(input("Digite o numero da missão para escolher, 0 para sair: "))
+                    if sel == 0:
+                        continue
+                    
+                    valor_obtido = int(input("digite a quantidade de itens/area/inimigos que você derrotou/completou: "))
+                    print(personagem_padrao.concluir_missao(personagem_padrao.missoes[sel-1], valor_obtido))
+                except IndexError:
+                    print("Não encontrado item correspondente ao número digitado")
+                except ValueError:
+                    print("Entrada de dados inválida!!")
+            else:
+                print("Você deve criar ou escolher um personagem para poder jogar missões!!!")
             
         case _:
             print(f"Opção {menu} inválida! tente novamente")
