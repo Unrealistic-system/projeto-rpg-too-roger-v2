@@ -104,12 +104,15 @@ while menu != 0:
 
                 case 5:
                     
-                    print(personagem_padrao.listar_Missao())
-                    sel = int(input("Digite o numero da missão para escolher, 0 para sair: "))
-                    if sel == 0:
-                        continue
-                    valor_obtido = int(input("digite a quantidade de itens/area/inimigos que você derrotou/completou: "))
-                    print(personagem_padrao.concluir_missao(personagem_padrao.missoes[sel-1], valor_obtido))
+                    if len(personagem_padrao.missoes) > 0:
+                        print(personagem_padrao.listar_Missao())
+                        sel = int(input("Digite o numero da missão para escolher, 0 para sair: "))
+                        if sel == 0:
+                            continue
+                        valor_obtido = int(input("digite a quantidade de itens/area/inimigos que você derrotou/completou: "))
+                        print(personagem_padrao.concluir_missao(personagem_padrao.missoes[sel-1], valor_obtido))
+                    else:
+                        print("Nenhuma misão para concluir!!!")
                     
                 case _:
                     print(f"Opção {menu} inválida! tente novamente")

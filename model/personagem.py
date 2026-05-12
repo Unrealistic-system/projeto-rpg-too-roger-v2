@@ -12,9 +12,9 @@ class Personagem:
         # vai com _ antes para ficar privado, só pode ser alterado o nome.
         self.__nivel = 1
         self.__xp = 0
-        self.__vida = 100
+        self.__vida = 80
         self.__misoes: list[Missao] = []
-        self.__ataque_Base = 0                  # ataque base do personagem 
+        self._ataque_Base = 0 
         self.__arma_equipada: Item | None = None
         self.__vestimenta_equipada: Item | None = None
         self.__utilitario_equipado: Item | None = None
@@ -38,7 +38,7 @@ class Personagem:
         return self.__misoes
     @property
     def ataque_base(self):
-        return self.__ataque_Base
+        return self._ataque_Base
     @property
     def inventario(self):
         return self.__inventario
@@ -63,7 +63,7 @@ class Personagem:
 
     @ataque_base.setter
     def ataque_base(self, novo_ataque):
-        self.__ataque_base = novo_ataque
+        self._ataque_base = novo_ataque
 
     def __reduzir_vida(self, valor):
         if self.__vida > 0:
@@ -78,11 +78,16 @@ class Personagem:
     def add_missao(self, missao_add):
         if not isinstance(missao_add, Missao):
             return(f"Falha ao adicionar misão, objeto de tipo inválido")
-        if missao_add in self.missoes:                               # missão está nas misões já
+        if missao_add in self.missoes:# missão já está nas misões, não atribuir novamente
             return(f"Misão não atribuida, ela é igual a outra misão já aceita pelo personagem!")
-        self.missoes.append(missao_add)
-        Missao.iniciar_missao(missao_add)
-        return(f"Misão atribuida a personagem!!!")
+        if len(self.inventario) > 0:
+            while self.__arma_equipada == None and self.vestimenta_equipada == None and self.utilitario_equipado == None:
+                print(self.equipar_item())
+            self.missoes.append(missao_add)
+            Missao.iniciar_missao(missao_add)
+            return(f"Misão atribuida a personagem!!!")
+        else:
+            return("Impossivel atribuir Missões, inventário vazio!!!")
 
     def concluir_missao(self, missao: Missao, valor):
             for m in self.__misoes:
@@ -114,27 +119,33 @@ class Personagem:
         else:
             return(f"Item não encontrado no inventário!!")
         
-    def equipar_itens(self):
-        # while self.__arma_equipada == None or self.vestimenta_equipada == None or self.utilitario_equipado == None:
-        while True:
-            limpar_terminal()
-            print(self.mostrar_inventario())
-            try:
-                indice = int(input(f"Digite o número do item a ser equipado:"))
-                item_equipar = self.inventario[indice]
-                if item_equipar.tipo == Tipo_item.ARMA:
-                    self.ataque_base += item_equipar.valor_efeito
-                    self.__arma_equipada = item_equipar
-                elif item_equipar.tipo == Tipo_item.VESTIMENTA:
-                    self.__vida += aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
-                    self.__vestimenta_equipada = item_equipar
-                elif item_equipar.tipo == Tipo_item.UTILITARIO:
-                    self.__vida += aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
-                    self.__utilitario_equipado = item_equipar
-                return f"Item equipado com sucesso!!!"
-            except IndexError or ValueError:
-                print(f"item digitado não existe!")
-                pausa()
+    def equipar_item(self):
+        limpar_terminal()
+        print(self.mostrar_inventario())
+        try:
+            indice = int(input(f"Digite o número do item a ser equipado: "))
+            item_equipar = self.inventario[indice-1]
+            if item_equipar.tipo == Tipo_item.ARMA:
+                if self.arma_equipada != None:
+                    self.ataque_Base -= self.arma_equipada.valor_efeito
+                self.ataque_base += item_equipar.valor_efeito
+                self.__arma_equipada = item_equipar
+            elif item_equipar.tipo == Tipo_item.VESTIMENTA:
+                if self.vestimenta_equipada != None:
+                    self.__vida = diminui_porcentagem(self.vida, self.vestimenta_equipada.valor_efeito)
+                self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
+                self.__vestimenta_equipada = item_equipar
+            elif item_equipar.tipo == Tipo_item.UTILITARIO:
+                if self.utilitario_equipado != None:
+                    self.__vida = diminui_porcentagem(self.vida, self.utilitario_equipado.valor_efeito)
+                self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
+                self.__utilitario_equipado = item_equipar
+            return f"Item equipado com sucesso!!!"
+        except IndexError:
+            return f"item digitado não existe!"
+        except ValueError:
+            return f"entrada digitada inválida!"
+            
     
     def desequipar(self):
         self.__arma_equipada = None
