@@ -2,11 +2,11 @@ from model.missao import Missao
 from model.personagem import Personagem
 from model.Missao_coleta import MissaoColeta
 from model.Missao_combate import MissaoCombate
-from model.Missao_exploracao import MisssaoExploracao
+#from model.Missao_exploracao import MisssaoExploracao
 from model.Item import Item
 from model.enums import Tipo_item
-from model.geral import *
-from tkinter import messagebox
+from model.base import *
+#from tkinter import messagebox
 '''
 help(mostrar_lista) # teste de documentação
 pausa()
@@ -53,97 +53,72 @@ while menu != 0:
         f"2 - Detalhar Personagem\n"
         f"3 - Atribuir Missões\n"
         f"4 - Adicionar Itens à inventário\n"
-        f"5 - Jogar Missão\n"
+        f"5 - Completar Missão\n"
         f"Escolha: "
     ))
-    match menu:
-        case 0:
 
-            print("\nSaindo...\n")
-            break
-
-        case 1:
-
-            print(mostrar_lista(lista_Personagens, "Personagens Padrão", 1))
-            try:
-                sel = int(input("Digite o numero do Personagem para escolher, 0 para criar: "))
-                if sel == 0:
-                    personagem_padrao = Personagem(input("Digite o nome do novo personagem a ser criado: "))
-                    lista_Personagens.append(personagem_padrao) # util para a troca de personagem
-                    print(f"Personagem {personagem_padrao} criado com sucesso!!")
-                else:
-                    personagem_padrao = lista_Personagens[sel-1]# atribui padrão ao personagem escolhido
-                    print(f"Personagem {personagem_padrao} escolhido!!")
-            except IndexError:
-               print("Não encontrado Personagem correspondente ao número digitado")
-            except ValueError:
-                print("Entrada de dados inválida!!")
-
-        case 2:
-
-            if not isinstance(personagem_padrao, Personagem):
-                print("Você deve criar ou escolher um personagem primeiro")
+    if menu == 1:
+        print(mostrar_lista(lista_Personagens, "Personagens Padrão", 1))
+        try:
+            sel = int(input("Digite o numero do Personagem para escolher, 0 para criar: "))
+            if sel == 0:
+                personagem_padrao = Personagem(input("Digite o nome do novo personagem a ser criado: "))
+                lista_Personagens.append(personagem_padrao) # util para a troca de personagem
+                print(f"Personagem {personagem_padrao} criado com sucesso!!")
             else:
-                print(Personagem.exibir_dados(personagem_padrao))
-                print(personagem_padrao.listar_Missao())
-                print(personagem_padrao.mostrar_inventario())
+                personagem_padrao = lista_Personagens[sel-1]# atribui padrão ao personagem escolhido
+                print(f"Personagem {personagem_padrao} escolhido!!")
+        except IndexError:
+            print("Não encontrado Personagem correspondente ao número digitado")
+        except ValueError:
+            print("Entrada de dados inválida!!")
+    elif isinstance(personagem_padrao, Personagem):
+        try:
+            match menu:
+                case 0:
 
-        case 3:
+                    print("\nSaindo...\n")
+                    break
 
-            print(mostrar_lista(lista_Missoes, "Missões Disponíveis", 1))
-            if not isinstance(personagem_padrao, Personagem):
-                print("Você deve criar ou escolher um personagem para poder atribuir Missões!!!")
-            else:
-                try:
+                case 2:
+
+                    print(personagem_padrao.exibir_dados())
+                    print(personagem_padrao.listar_Missao())
+                    print(personagem_padrao.mostrar_inventario())
+
+                case 3:
+
+                    print(mostrar_lista(lista_Missoes, "Missões Disponíveis", 1))
                     id_missao = int(input("Digite um numero da lista para atibuir, 0 para sair: "))
                     if id_missao == 0:
                         continue
                     print(personagem_padrao.add_missao(lista_Missoes[id_missao-1]))# -1 para pegar o indice correto
-                except IndexError:
-                    print("Não encontrado Missão correspondente ao número digitado")
-                except ValueError:
-                    print("Entrada de dados inválida!!")
 
-        case 4:
+                case 4:
 
-            print(mostrar_lista(lista_itens, "Itens Disponíveis", 1))
-            if not isinstance(personagem_padrao, Personagem):
-                print("Você deve criar ou escolher um personagem para poder adicionar itens no inventário!!!")
-            else:
-                try:
+                    print(mostrar_lista(lista_itens, "Itens Disponíveis", 1))
                     id_item = int(input("Digite um numero da lista para adicionar, 0 para sair: "))
                     if id_item == 0:
                         continue
                     print(personagem_padrao.add_item(lista_itens[id_item-1]))# -1 para pegar o indice correto
-                except IndexError:
-                    print("Não encontrado item correspondente ao número digitado")
-                except ValueError:
-                    print("Entrada de dados inválida!!")
 
-        case 5:
-
-            if isinstance(personagem_padrao, Personagem):
-                print(personagem_padrao.listar_Missao())
-                try:
+                case 5:
+                    
+                    print(personagem_padrao.listar_Missao())
                     sel = int(input("Digite o numero da missão para escolher, 0 para sair: "))
                     if sel == 0:
                         continue
-                    
                     valor_obtido = int(input("digite a quantidade de itens/area/inimigos que você derrotou/completou: "))
                     print(personagem_padrao.concluir_missao(personagem_padrao.missoes[sel-1], valor_obtido))
-                except IndexError:
-                    print("Não encontrado item correspondente ao número digitado")
-                except ValueError:
-                    print("Entrada de dados inválida!!")
-            else:
-                print("Você deve criar ou escolher um personagem para poder jogar missões!!!")
-            
-        case _:
-            print(f"Opção {menu} inválida! tente novamente")
+                    
+                case _:
+                    print(f"Opção {menu} inválida! tente novamente")
+        except IndexError:
+            print("Não encontrado item correspondente ao número digitado")
+        except ValueError:
+            print("Entrada de dados inválida!!")
+        except:
+            print("Erro!!")
+    else:
+        print("Você deve criar ou escolher um personagem primeiro")
     pausa()
-
-'''
-print(ps.mostrar_itens_equipados())
-print(ps.equipar_itens())
-
-'''

@@ -1,7 +1,7 @@
 from model.missao import Missao
 from model.enums import Status_Missao
 from model.Item import Item
-from model.geral import *
+from model.base import *
 from model.enums import Tipo_item
 
 class Personagem:
@@ -83,10 +83,6 @@ class Personagem:
         self.missoes.append(missao_add)
         Missao.iniciar_missao(missao_add)
         return(f"Misão atribuida a personagem!!!")
-    
-    def listar_Missao(self):
-        return mostrar_lista(self.missoes, f"Lista de missões do personagem [{self.nome}]", 1)
-        
 
     def concluir_missao(self, missao: Missao, valor):
             for m in self.__misoes:
@@ -102,9 +98,6 @@ class Personagem:
                         self.__reduzir_vida(10)      
                     return resultado
             raise ValueError("Missão não encontrada")
-
-    def mostrar_inventario(self):
-        return mostrar_lista(self.inventario, f"Itens no Inventário de [{self.nome}]", 1)
 
     def add_item(self, item):
         if not isinstance(item, Item):
@@ -142,23 +135,28 @@ class Personagem:
             except IndexError or ValueError:
                 print(f"item digitado não existe!")
                 pausa()
+    
     def desequipar(self):
         self.__arma_equipada = None
         self.__vestimenta_equipada = None
         self.__utilitario_equipado = None
 
+## Exibição de dados:
     def mostrar_itens_equipados(self):
-        msg = f"\n-- Itens Equipados de [{self.nome}]: --\n"
-        e = "Nenhum" # texto se vazio
-        msg += (f"Arma: "
-                f"{self.__arma_equipada if self.__arma_equipada is not None else e}\n")
+        msg = (f"Arma: "
+                f"{self.__arma_equipada if self.__arma_equipada is not None else "Desequipado"}\n")
         msg += (f"Vestimenta: "
-                f"{self.__vestimenta_equipada if self.__vestimenta_equipada is not None else e}\n")
+                f"{self.__vestimenta_equipada if self.__vestimenta_equipada is not None else "Desequipado"}\n")
         msg += (f"Utilitário: "
-                f"{self.__utilitario_equipado if self.__utilitario_equipado is not None else e}\n")
+                f"{self.__utilitario_equipado if self.__utilitario_equipado is not None else "Desequipado"}\n")
         return msg
+    
+    def mostrar_inventario(self):
+        return mostrar_lista(self.inventario, f"Itens no Inventário de [{self.nome}]", 1)
+    
+    def listar_Missao(self):
+        return mostrar_lista(self.missoes, f"Lista de missões do personagem [{self.nome}]", 1)
 
-## padrão
     def exibir_dados(self):
         return (f"{'='*30}\n--- STATUS DO JOGADOR ---\n"
                 f"Nome: {self.nome}\n"
@@ -166,19 +164,15 @@ class Personagem:
                 f"HP: {self.vida}\n"
                 f"XP: {self.xp}\n"
                 f"ATK base: {self.ataque_base}\n"
-                f"Arma: {self.arma_equipada if self.arma_equipada is not None else 'Desequipado'}\n"
-                f"Vestimenta: {self.vestimenta_equipada if self.vestimenta_equipada is not None else 'Desequipado'}\n"
-                f"Utilitário: {self.utilitario_equipado if self.utilitario_equipado is not None else 'Desequipado'}\n"
+                f"{self.mostrar_itens_equipados()}"
                 f"{'='*30}")
     
     def __str__(self):
         return (f" --{self.nome} LV:{self.nivel}"
                 f" XP:{self.xp} HP:{self.vida}-- ")
-    
+
+## métodos padrão:
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, Personagem):
             return False
-        return (self.nome == outro.nome 
-                and self.nivel == outro.nivel 
-                and self.xp == outro.xp 
-                and self.vida == outro.vida)
+        return (self.nome == outro.nome) # só comparar o nome para poder bloquear crição de personagens com mesmo nome

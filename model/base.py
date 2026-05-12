@@ -1,5 +1,5 @@
 '''
-Aqui ficam funções usadas no jogo:
+Aqui ficam algumas funções usadas no jogo:
 '''
 import os 
 
