@@ -19,8 +19,7 @@ class Personagem:
         self.__vestimenta_equipada: Item | None = None
         self.__utilitario_equipado: Item | None = None
         self.__inventario: list[Item] = []
-        
-
+# getters:
     @property
     def nome(self):
         return self._nome
@@ -51,7 +50,7 @@ class Personagem:
     @property
     def utilitario_equipado(self):
         return self.__utilitario_equipado
-    
+# setters:
     @nome.setter
     def nome(self, novo_nome):
         if not isinstance(novo_nome, str):
@@ -65,6 +64,7 @@ class Personagem:
     def ataque_base(self, novo_ataque):
         self._ataque_base = novo_ataque
 
+# outros métodos:
     def __reduzir_vida(self, valor):
         if self.__vida > 0:
             if valor <= self.__vida:
@@ -82,7 +82,7 @@ class Personagem:
             return(f"Misão não atribuida, ela é igual a outra misão já aceita pelo personagem!")
         if len(self.inventario) > 0:
             while self.__arma_equipada == None and self.vestimenta_equipada == None and self.utilitario_equipado == None:
-                print(self.equipar_item())
+                print(self.equipar_item(self))
             self.missoes.append(missao_add)
             Missao.iniciar_missao(missao_add)
             return(f"Misão atribuida a personagem!!!")
@@ -119,34 +119,28 @@ class Personagem:
         else:
             return(f"Item não encontrado no inventário!!")
         
-    def equipar_item(self):
-        limpar_terminal()
-        print(self.mostrar_inventario())
-        try:
-            indice = int(input(f"Digite o número do item a ser equipado: "))
-            item_equipar = self.inventario[indice-1]
-            if item_equipar.tipo == Tipo_item.ARMA:
-                if self.arma_equipada != None:
-                    self.ataque_Base -= self.arma_equipada.valor_efeito
-                self.ataque_base += item_equipar.valor_efeito
-                self.__arma_equipada = item_equipar
-            elif item_equipar.tipo == Tipo_item.VESTIMENTA:
-                if self.vestimenta_equipada != None:
-                    self.__vida = diminui_porcentagem(self.vida, self.vestimenta_equipada.valor_efeito)
-                self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
-                self.__vestimenta_equipada = item_equipar
-            elif item_equipar.tipo == Tipo_item.UTILITARIO:
-                if self.utilitario_equipado != None:
-                    self.__vida = diminui_porcentagem(self.vida, self.utilitario_equipado.valor_efeito)
-                self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
-                self.__utilitario_equipado = item_equipar
-            return f"Item equipado com sucesso!!!"
-        except IndexError:
-            return f"item digitado não existe!"
-        except ValueError:
-            return f"entrada digitada inválida!"
+    def equipar_item(self, item_equipar):
+        if not isinstance(item_equipar, Item):
+            return "Item não equipado, erro!!"
+        if item_equipar.tipo == Tipo_item.ARMA:
+            if self.arma_equipada != None:
+                self.ataque_Base -= self.arma_equipada.valor_efeito
+            self.ataque_base += item_equipar.valor_efeito
+            self.__arma_equipada = item_equipar
+        elif item_equipar.tipo == Tipo_item.VESTIMENTA:
+            if self.vestimenta_equipada != None:
+                self.__vida = diminui_porcentagem(self.vida, self.vestimenta_equipada.valor_efeito)
+            self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
+            self.__vestimenta_equipada = item_equipar
+        elif item_equipar.tipo == Tipo_item.UTILITARIO:
+            if self.utilitario_equipado != None:
+                self.__vida = diminui_porcentagem(self.vida, self.utilitario_equipado.valor_efeito)
+            self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
+            self.__utilitario_equipado = item_equipar
+        return f"Item equipado com sucesso!!!"
             
-    
+
+
     def desequipar(self):
         self.__arma_equipada = None
         self.__vestimenta_equipada = None

@@ -23,15 +23,20 @@ lista_itens: list[Item] = []
 lista_itens.append(Item("Espada de Edward", "espada que pertencia a um antigo pirata", 40, Tipo_item.ARMA))
 lista_itens.append(Item("Capacete de Comerciante", "capacete formal usado por comerciantes", 10, Tipo_item.VESTIMENTA))
 lista_itens.append(Item("Espelho Miraculoso", "espelho que aumenta a vida de quem o equipa", 30, Tipo_item.UTILITARIO))
-'''
-it: Item | None = None # teste itens
-print(Item.__str__(lista_itens[1]))
-print(Item.__str__(it))
-pausa()
-'''
 
-
-
+def preparar_para_missao(personagem):
+    limpar_terminal()
+    try:
+        print(personagem.mostrar_inventario())
+        indice = int(input(f"Digite o número do item a ser equipado: "))
+        item_equipar = personagem.inventario[indice-1]
+        print(personagem.equipar_item(item_equipar))
+    except IndexError:
+        return f"item digitado não existe!"
+    except ValueError:
+        return f"entrada digitada inválida!"
+    except TypeError:
+        return f"entrada digitada inválida!"
 
 #missoes default
 lista_Missoes.append(MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10))
@@ -92,6 +97,7 @@ while menu != 0:
                     id_missao = int(input("Digite um numero da lista para atibuir, 0 para sair: "))
                     if id_missao == 0:
                         continue
+                    preparar_para_missao(personagem_padrao)
                     print(personagem_padrao.add_missao(lista_Missoes[id_missao-1]))# -1 para pegar o indice correto
 
                 case 4:
