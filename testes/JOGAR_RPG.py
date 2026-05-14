@@ -1,12 +1,18 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from model.missao import Missao
 from model.personagem import Personagem
-from model.Missao_coleta import MissaoColeta
-from model.Missao_combate import MissaoCombate
+from model.FactotyMissao import factoryMissao
+#from model.Missao_coleta import MissaoColeta
+#from model.Missao_combate import MissaoCombate
 #from model.Missao_exploracao import MisssaoExploracao
 from model.Item import Item
 from model.enums import Tipo_item
 from model.base import *
 #from tkinter import messagebox
+
 '''
 help(mostrar_lista) # teste de documentação
 pausa()
@@ -39,6 +45,7 @@ def preparar_para_missao(personagem):
         return f"entrada digitada inválida!"
 
 #missoes default
+lista_Missoes.append(factoryMissao("coleta", ))
 lista_Missoes.append(MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10))
 lista_Missoes.append(MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin"))
 
@@ -81,10 +88,7 @@ while menu != 0:
         try:
             match menu:
                 case 0:
-
-                    print("\nSaindo...\n")
-                    break
-
+                    pass
                 case 2:
 
                     print(personagem_padrao.exibir_dados())
@@ -127,7 +131,9 @@ while menu != 0:
         except ValueError:
             print("Entrada de dados inválida!!")
         except:
-            print("Erro!!")
-    else:
+            print("Erro!!")   
+    elif menu != 0 and not isinstance(personagem_padrao, Personagem):
         print("Você deve criar ou escolher um personagem primeiro")
+    else:
+        print("\nSaindo...\n")
     pausa()
