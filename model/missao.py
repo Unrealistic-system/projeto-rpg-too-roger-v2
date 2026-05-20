@@ -74,7 +74,8 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
 
     @abstractmethod
     def concluir_missao (self, valor):
-        pass
+        self.estado = self.estado.concluir(valor)
+        
     '''       # testar dps
             if self.status == Status_Missao.CONCLUIDA:
                 return(f"Missão '{self.nome}' Já foi concluida, não é possivel concluir novamente.")

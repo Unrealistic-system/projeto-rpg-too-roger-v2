@@ -55,10 +55,11 @@ class EstadoAndamento(EstadoMissao):
 
     def iniciar(self):
         super().iniciar()
-        return EstadoConcluida(self.missao)
+        return EstadoAndamento(self.missao)
 
     def concluir(self, valor):
         super().concluir(valor)
+        if valor < self.missao.
         return EstadoConcluida(self.missao) 
     
 class EstadoConcluida(EstadoMissao):
