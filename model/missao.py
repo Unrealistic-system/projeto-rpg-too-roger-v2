@@ -53,27 +53,24 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
             raise Exception ("Recompensa precisa ser positiva e menor que 50!!!")
         self._recompensa = n_rec
 
-    """  @status.setter
-    def status(self, n_st):
-        if isinstance(n_st, Status_Missao):
-            self._status = n_st
+    @estado.setter
+    def estado(self, n_st):
+        if isinstance(n_st, EstadoMissao):
+            self._estado = n_st
         else:
-            raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}") """
+            raise TypeError
 
     def iniciar_missao (self):
-        if self.status == Status_Missao.EM_ANDAMENTO:
-            print(f"Missão {self.nome} Já foi Iniciada, não é possivel iniciar novamente.")
-            return
-        # nasse caqso print não é uma boa prática, usar return
-        elif self.status == Status_Missao.CONCLUIDA:
-            print(f"Missão {self.nome} Já foi Concluida, não é possivel iniciar novamente.")
-            return
-        elif self.status == Status_Missao.FRACASSADA:
-            print(f"Missão {self.nome} Já foi Terminada com Fracasso, não é possivel iniciar novamente.")
-            return
+        if isinstance(self.estado, EstadoPendente):
+            self.estado = self.estado.iniciar()
+            return (f"Missão: {self.nome}, começou! Objetivo central da missão: {self.descricao}")
         else:
-            self.status = Status_Missao.EM_ANDAMENTO
-            print(f"A missão '{self.nome}' começou! Objetivo central da missão: {self.descricao}")
+            return (f"Erro não foi possivel iniciar!")
+        
+    def __eq__(self, outro:object) -> bool:
+        if not isinstance(outro, Missao):
+            return False
+        return (self.nome == outro.nome)
 
     @abstractmethod
     def concluir_missao (self, valor):
@@ -92,15 +89,9 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
         return (f"{self.__class__.__name__}\n"
                 f"{'='*30}\n--- MISSÃO ---\nNome da Missão: {self.nome}\n"
                 f"Descrição: {self.descricao}\nRecompensa: {self.recompensa} XP\n"
-                f"Status: {self.status.name}\n")
+                f"Status: {self.estado.__class__.__name__}\n")
     
     @abstractmethod
     def __str__(self):
         return (f"{self.__class__.__name__}: {self.nome} ({self.descricao}) "
-                f"XP:[{self.recompensa}] [{self.status.value}]")
-   
-    def __eq__(self, outro:object) -> bool:
-        if not isinstance(outro, Missao):
-            return False
-        return (self.nome == outro.nome)
-    
+                f"XP:[{self.recompensa}] [{self.estado.__class__.__name__}]")

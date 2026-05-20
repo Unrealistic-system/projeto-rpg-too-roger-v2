@@ -7,26 +7,26 @@ from model.missao import Missao
     CONCLUIDA = "CONCLUIDA"
     FRACASSADA = "FRACASSADA" """
 
-class EstadoMissao(ABC): # começar classe com maiusculo - convenção python
+class EstadoMissao(ABC):
     def __init__(self, missao:Missao):
         self.missao = missao
     
     @property 
     def missao(self):
-        return self.missao
+        return self._missao
     
     @missao.setter
     def missao(self, atribuir_missao):
         if not isinstance(atribuir_missao, Missao):
             raise TypeError("Erro, objeto não é uma missão")
-        self.missao = atribuir_missao
+        self._missao = atribuir_missao
 
     @abstractmethod
-    def iniciar(self):
+    def iniciar(self) -> 'EstadoMissao':
         pass
 
     @abstractmethod
-    def concluir(self, valor):
+    def concluir(self, valor) -> 'EstadoMissao':
         pass
 
     def __str__(self):
@@ -43,22 +43,23 @@ class EstadoPendente(EstadoMissao):
 
     def iniciar(self):
         super().iniciar()
-        return EstadoPendente()
+        return self
 
     def concluir(self, valor):
         super().concluir(valor)
-        return EstadoPendente.iniciar(self) 
+        return EstadoAndamento(self.missao) 
 
 class EstadoAndamento(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
+
     def iniciar(self):
         super().iniciar()
-        return EstadoConcluida.iniciar(self.missao)
+        return EstadoConcluida(self.missao)
 
     def concluir(self, valor):
         super().concluir(valor)
-        return EstadoConcluida.iniciar(self.missao) 
+        return EstadoConcluida(self.missao) 
     
 class EstadoConcluida(EstadoMissao):
     def __init__(self, missao: Missao):
@@ -66,10 +67,11 @@ class EstadoConcluida(EstadoMissao):
 
     def iniciar(self):
         super().iniciar()
-        return self.EstadoConcluida()
+        return self
 
     def concluir(self, valor):
         super().concluir(valor)
+        return self
     
 class EstadoFracassada(EstadoMissao):
     def __init__(self, missao: Missao):
@@ -77,7 +79,8 @@ class EstadoFracassada(EstadoMissao):
 
     def iniciar(self):
         super().iniciar()
-        return self.EstadoFracassada() 
+        return self
 
     def concluir(self, valor):
         super().concluir(valor)
+        return self
