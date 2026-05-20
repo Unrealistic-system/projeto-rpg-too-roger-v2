@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 class Missao(ABC): # começar classe com maiusculo - convenção python
-    def __init__(self, nome, descricao, recompensa, status= Status_Missao.PENDENTE):
+    def __init__(self, nome, descricao, recompensa):
         self._nome = None
         self._descricao = None
         self._recompensa = 0
@@ -9,7 +9,7 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
         self.nome = nome
         self.descricao = descricao
         self.recompensa = recompensa
-        self.status = status
+        self.estado = EstadoPendente(self)
 
     @property 
     def nome(self):
