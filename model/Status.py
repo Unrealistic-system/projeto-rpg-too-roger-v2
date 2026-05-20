@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 from model.missao import Missao
-class Status_Missao (Enum):
+
+""" class Status_Missao (Enum):
     PENDENTE = "PENDENTE"
     EM_ANDAMENTO = "EM ANDAMENTO"
     CONCLUIDA = "CONCLUIDA"
-    FRACASSADA = "FRACASSADA"
+    FRACASSADA = "FRACASSADA" """
 
 class EstadoMissao(ABC): # começar classe com maiusculo - convenção python
     def __init__(self, missao:Missao):
@@ -23,6 +24,7 @@ class EstadoMissao(ABC): # começar classe com maiusculo - convenção python
     @abstractmethod
     def iniciar(self):
         pass
+
     @abstractmethod
     def concluir(self, valor):
         pass
@@ -38,36 +40,44 @@ class EstadoMissao(ABC): # começar classe com maiusculo - convenção python
 class EstadoPendente(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
+
     def iniciar(self):
         super().iniciar()
-        return self.EstadoPendente() 
+        return EstadoPendente()
+
     def concluir(self, valor):
         super().concluir(valor)
-        return self.EstadoAndamento() 
+        return EstadoPendente.iniciar(self) 
+
 class EstadoAndamento(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
     def iniciar(self):
         super().iniciar()
-        return self.EstadoAndamento() 
+        return EstadoConcluida.iniciar(self.missao)
+
     def concluir(self, valor):
         super().concluir(valor)
-        return self.EstadoConcluida() 
+        return EstadoConcluida.iniciar(self.missao) 
     
 class EstadoConcluida(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
+
     def iniciar(self):
         super().iniciar()
-        return self.EstadoConcluida() 
+        return self.EstadoConcluida()
+
     def concluir(self, valor):
         super().concluir(valor)
     
 class EstadoFracassada(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
+
     def iniciar(self):
         super().iniciar()
         return self.EstadoFracassada() 
+
     def concluir(self, valor):
         super().concluir(valor)

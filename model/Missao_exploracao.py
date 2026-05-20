@@ -1,9 +1,8 @@
-from model.enums import Status_Missao
 from model.missao import Missao
 
 class MisssaoExploracao (Missao):
-    def __init__(self, nome, descricao, recompensa, regiao_destino:str, distancia_em_km:float, tempo_limite:int, status=Status_Missao.PENDENTE):
-        super().__init__(nome, descricao, recompensa, status)
+    def __init__(self, nome, descricao, recompensa, regiao_destino:str, distancia_em_km:float, tempo_limite:int, estado):
+        super().__init__(nome, descricao, recompensa, estado)
         self.local = regiao_destino
         self.distancia = distancia_em_km
         self.tempo = tempo_limite
@@ -11,6 +10,13 @@ class MisssaoExploracao (Missao):
     @property
     def local(self):
         return self.__local
+    @property
+    def distancia(self):
+        return self.__distancia
+    @property
+    def tempo(self):
+        return self.__tempo
+    
     @local.setter
     def local(self, local):
         if not isinstance(local, str):
@@ -19,10 +25,7 @@ class MisssaoExploracao (Missao):
         local = ' '.join(local)
         local = local.title() #maiuscula primeira
         self.__local = local
-
-    @property
-    def distancia(self):
-        return self.__distancia
+    
     @distancia.setter
     def distancia(self, dt):
         if not isinstance(dt, float):
@@ -31,9 +34,6 @@ class MisssaoExploracao (Missao):
             raise ValueError("Distancia precisa ser maior que 0 e menor que 50 Km")
         self.__distancia = dt
     
-    @property
-    def tempo(self):
-        return self.__tempo
     @tempo.setter
     def tempo(self, tempo):
         if not isinstance(tempo, int):

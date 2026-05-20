@@ -1,15 +1,16 @@
 from abc import ABC, abstractmethod
+from model.Status import *
 
 class Missao(ABC): # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa):
-        self._nome = None
+        self.nome = None
         self._descricao = None
         self._recompensa = 0
         
         self.nome = nome
-        self.descricao = descricao
-        self.recompensa = recompensa
-        self.estado = EstadoPendente(self)
+        self._descricao = descricao
+        self._recompensa = recompensa
+        self._estado = EstadoPendente(self)
 
     @property 
     def nome(self):
@@ -31,8 +32,8 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
     def recompensa(self):
         return self._recompensa
     @property
-    def status(self):
-        return self._status
+    def estado(self):
+        return self._estado
     
     @descricao.setter
     def descricao(self, n_desc):
@@ -52,12 +53,12 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
             raise Exception ("Recompensa precisa ser positiva e menor que 50!!!")
         self._recompensa = n_rec
 
-    @status.setter
+    """  @status.setter
     def status(self, n_st):
         if isinstance(n_st, Status_Missao):
             self._status = n_st
         else:
-            raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}")
+            raise TypeError(f"O status deve ser uma destas opções: {[s.name for s in Status_Missao]}") """
 
     def iniciar_missao (self):
         if self.status == Status_Missao.EM_ANDAMENTO:
@@ -101,7 +102,5 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
     def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, Missao):
             return False
-        return (self.nome == outro.nome 
-                and self.descricao == outro.descricao 
-                and self.recompensa == outro.recompensa)
+        return (self.nome == outro.nome)
     

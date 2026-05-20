@@ -1,22 +1,16 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from model.missao import Missao
 from model.personagem import Personagem
 from model.FactotyMissao import factoryMissao
-#from model.Missao_coleta import MissaoColeta
-#from model.Missao_combate import MissaoCombate
-#from model.Missao_exploracao import MisssaoExploracao
-from model.Item import Item
-from model.enums import Tipo_item
+from model.Item import Item, Tipo_item
 from model.base import *
 #from tkinter import messagebox
 
 '''
 help(mostrar_lista) # teste de documentação
 pausa()
-
 '''
 
 

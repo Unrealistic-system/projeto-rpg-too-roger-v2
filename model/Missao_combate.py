@@ -1,9 +1,8 @@
-from model.enums import Status_Missao
 from model.missao import Missao
 
 class MissaoCombate (Missao):
-    def __init__(self, nome, descricao, recompensa, inimigo:str, inimigos_a_derrotar:int, status=Status_Missao.PENDENTE):
-        super().__init__(nome, descricao, recompensa, status)
+    def __init__(self, nome, descricao, recompensa, estado, inimigo:str, inimigos_a_derrotar:int):
+        super().__init__(nome, descricao, recompensa, estado)
         self.inimigos_a_derrotar = inimigos_a_derrotar
         self.inimigo = inimigo
 
