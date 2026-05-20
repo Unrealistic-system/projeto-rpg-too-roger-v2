@@ -39,30 +39,35 @@ class EstadoPendente(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
     def iniciar(self):
-        return super().iniciar()
+        super().iniciar()
+        return self.EstadoPendente() 
     def concluir(self, valor):
-        return super().concluir(valor)
-    
+        super().concluir(valor)
+        return self.EstadoAndamento() 
 class EstadoAndamento(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
     def iniciar(self):
-        return super().iniciar()
+        super().iniciar()
+        return self.EstadoAndamento() 
     def concluir(self, valor):
-        return super().concluir(valor)
+        super().concluir(valor)
+        return self.EstadoConcluida() 
     
 class EstadoConcluida(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
     def iniciar(self):
-        return super().iniciar()
+        super().iniciar()
+        return self.EstadoConcluida() 
     def concluir(self, valor):
-        return super().concluir(valor)
+        super().concluir(valor)
     
 class EstadoFracassada(EstadoMissao):
     def __init__(self, missao: Missao):
         super().__init__(missao)
     def iniciar(self):
-        return super().iniciar()
+        super().iniciar()
+        return self.EstadoFracassada() 
     def concluir(self, valor):
-        return super().concluir(valor)
+        super().concluir(valor)
