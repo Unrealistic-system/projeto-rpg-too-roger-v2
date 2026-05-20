@@ -1,4 +1,3 @@
-from model.enums import Status_Missao
 from abc import ABC, abstractmethod
 
 class Missao(ABC): # começar classe com maiusculo - convenção python

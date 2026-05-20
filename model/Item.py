@@ -1,4 +1,9 @@
-from model.enums import Tipo_item
+from enum import Enum
+
+class Tipo_item (Enum):
+    ARMA = "Arma"
+    VESTIMENTA = "Vestimenta"
+    UTILITARIO = "Utilitário"
 
 class Item():
     def __init__(self, nome,descricao, valor_efeito, tipo: Tipo_item):
