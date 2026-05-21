@@ -27,6 +27,10 @@ class EstadoMissao(ABC):
     def concluir(self, valor_exigido, valor_obtido) -> 'EstadoMissao':
         pass
 
+    @abstractmethod
+    def get_nome(self) -> 'str':
+        pass
+
     def __str__(self):
         return (f"{self.__class__.__name__}")
    
@@ -45,7 +49,11 @@ class EstadoPendente(EstadoMissao):
 
     def concluir(self, valor_exigido, valor_obtido):
         super().concluir(valor_exigido, valor_obtido) # não usa no pendente os valores, mas precisa ter
-        return EstadoAndamento(self.missao) 
+        return EstadoAndamento(self.missao)
+    
+    def get_nome(self):
+        return "Pendente"
+
 
 class EstadoAndamento(EstadoMissao):
     def __init__(self, missao: 'Missao'):
@@ -61,6 +69,8 @@ class EstadoAndamento(EstadoMissao):
             return EstadoConcluida(self.missao)
         else:
             return EstadoFracassada(self.missao)
+    def get_nome(self):
+        return "Andamento"
     
 class EstadoConcluida(EstadoMissao):
     def __init__(self, missao: 'Missao'):
@@ -73,7 +83,9 @@ class EstadoConcluida(EstadoMissao):
     def concluir(self, valor_exigido, valor_obtido):
         super().concluir(valor_exigido, valor_obtido)
         print("Missão já concluida, não é possivel concluir novamente")
-        return self
+    
+    def get_nome(self):
+        return "Concluída"
     
 class EstadoFracassada(EstadoMissao):
     def __init__(self, missao: 'Missao'):
@@ -87,3 +99,6 @@ class EstadoFracassada(EstadoMissao):
         super().concluir(valor_exigido, valor_obtido)
         print("Missão fracassada, não é possivel concluir")
         return self
+    
+    def get_nome(self):
+        return "Fracassada"

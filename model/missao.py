@@ -11,7 +11,7 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
         self.nome = nome
         self._descricao = descricao
         self._recompensa = recompensa
-        self._estado = EstadoPendente(self)
+        self._estado = EstadoPendente(self) if self.estado is None else self.estado
 
     @property 
     def nome(self):
