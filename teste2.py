@@ -5,7 +5,7 @@ from model.personagem import Personagem
 from model.FactotyMissao import factoryMissao
 from model.Item import Item, Tipo_item
 from model.base import *
-from model.missao import Missao
+#from model.missao import Missao
 """ from tkinter import messagebox
 
 messagebox.showinfo("janela", "teste2")
