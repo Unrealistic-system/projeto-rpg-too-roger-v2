@@ -9,10 +9,10 @@ class MissaoColeta (Missao):
         self.quantidade = quantidade
     
     @property 
-    def item_necesario(self):
+    def item_necessario(self):
         return self.__item_necessario
     
-    @item_necesario.setter
+    @item_necessario.setter
     def item_necessario(self, it):
         if not isinstance(it, str):
             raise TypeError("Item precisa ser texto.")
@@ -34,24 +34,24 @@ class MissaoColeta (Missao):
 
     def concluir_missao (self, valor):
             super().concluir_missao(valor)
-            self.estado = self.estado.concluir(self.quantidade, valor) # type: ignore
+            self.estado = self.estado.concluir(self.quantidade, valor)
 
-            if self.estado == EstadoConcluida:
+            if isinstance(self.estado, EstadoConcluida):
                 print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
                         f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
             else:
-                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
+                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necessario} "
                            f"não foi atingida. Faltam {self.quantidade-valor}")      
 
     def exibir_dados(self):
         str = super().exibir_dados()
-        str += (f"Item necessário: {self.item_necesario}\n"
+        str += (f"Item necessário: {self.item_necessario}\n"
                 f"Quantidade: {self.quantidade}\n{'='*30}")
         return str
 
     def __str__(self):
         str = super().__str__()
-        str += f", item: {self.item_necesario} X [{self.quantidade}]"
+        str += f", item: {self.item_necessario} X [{self.quantidade}]"
         return str
         # return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]
    

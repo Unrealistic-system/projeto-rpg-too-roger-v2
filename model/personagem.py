@@ -1,12 +1,10 @@
 from model.missao import Missao
 from model.Item import Item, Tipo_item
 from model.base import *
-from model.Status import EstadoConcluida
+from model.Status import EstadoConcluida, EstadoFracassada
 
 class Personagem:
     def __init__(self, nome:str):
-
-
         self.nome = nome
         # vai com _ antes para ficar privado, só pode ser alterado o nome.
         self.__nivel = 1
@@ -80,6 +78,8 @@ class Personagem:
         if missao_add in self.missoes:# missão já está nas misões, não atribuir novamente
             return(f"Misão não atribuida, ela é igual a outra misão já aceita pelo personagem!")
         if len(self.inventario) > 0:
+            if self.arma_equipada == None and self.vestimenta_equipada == None and self.utilitario_equipado == None:
+                self.equipar_item(self.inventario[0])
             while self.__arma_equipada == None and self.vestimenta_equipada == None and self.utilitario_equipado == None:
                 print(self.equipar_item(self))
             self.missoes.append(missao_add)
@@ -92,13 +92,13 @@ class Personagem:
             for m in self.__misoes:
                 if m == missao:
                     resultado = m.concluir_missao(valor)
-                    if m.estado == EstadoConcluida:
+                    if isinstance(m.estado, EstadoConcluida):
                         self.__xp += m.recompensa
                         if self.__xp >= 20:
                             ganho_vida = self.__xp // 20
                             self.__nivel += ganho_vida
                             self.__xp = self.__xp % 20
-                    elif m.estado == EstadoConcluida:
+                    elif isinstance(m.estado, EstadoFracassada):
                         self.__reduzir_vida(10)      
                     return resultado
             raise ValueError("Missão não encontrada")
@@ -137,8 +137,6 @@ class Personagem:
             self.__vida = aumenta_porcentagem(self.__vida, item_equipar.valor_efeito)
             self.__utilitario_equipado = item_equipar
         return f"Item equipado com sucesso!!!"
-            
-
 
     def desequipar(self):
         self.__arma_equipada = None

@@ -46,8 +46,13 @@ Argumentos: tipo_missao:str, nome:str, descricao:str, recompensa
         coleta: "nome_item", "quantidade"
         exploração: "regiao_destino", "distancia_em_km", "tempo_limite"
 '''
-lista_Missoes.append(factoryMissao.criar_missao(tipo_missao="coleta",nome="Coletar maças", descricao="Colete maças pela montanha de olindo", recompensa=40, quantidade= 10, tipo_item= "maças"))
-#lista_Missoes.append(MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin"))
+lista_Missoes.append(factoryMissao.criar_missao(tipo_missao="coleta",nome="Coletar maças", 
+                                                descricao="Colete maças pela montanha de olindo", 
+                                                recompensa=40, quantidade= 10, tipo_item= "maças"))
+lista_Missoes.append(factoryMissao.criar_missao("combate","Derrotar Goblin", "Derrote os goblins da arena", 
+                                                40, tipo_inimigo= "Goblin", qnt_inimigos = 20))
+lista_Missoes.append(factoryMissao.criar_missao("exploracao","Terranova", "busca tesouro em castelo", 10, 
+                                                regiao_destino= "Novigards", distancia_em_km= 15.5, tempo_limite= 50))
 
 # personagens default
 lista_Personagens.append(Personagem("Chitãozinho"))

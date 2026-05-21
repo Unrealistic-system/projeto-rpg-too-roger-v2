@@ -55,9 +55,9 @@ class MisssaoExploracao (Missao):
 
     def concluir_missao (self, valor):
             super().concluir_missao(valor)
-            self.estado = self.estado.concluir(self.distancia, valor) # type: ignore
+            self.estado = self.estado.concluir(self.distancia, valor)
 
-            if self.estado == EstadoConcluida:
+            if isinstance(self.estado, EstadoConcluida):
                 print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
                       f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
             else:

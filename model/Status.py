@@ -41,7 +41,7 @@ class EstadoPendente(EstadoMissao):
 
     def iniciar(self):
         super().iniciar()
-        return self
+        return EstadoAndamento(self.missao)
 
     def concluir(self, valor_exigido, valor_obtido):
         super().concluir(valor_exigido, valor_obtido) # não usa no pendente os valores, mas precisa ter
