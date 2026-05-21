@@ -3,9 +3,10 @@ from model.Status import *
 
 class Missao(ABC): # começar classe com maiusculo - convenção python
     def __init__(self, nome, descricao, recompensa):
-        self.nome = None
+        """ self.nome = None
         self._descricao = None
         self._recompensa = 0
+        self._estado = None """
         
         self.nome = nome
         self._descricao = descricao
@@ -15,15 +16,6 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
     @property 
     def nome(self):
         return self._nome
-    @nome.setter
-    def nome(self, novo_nome):
-        if not isinstance(novo_nome, str):
-            raise TypeError ("Nome precisa ser texto!!!")
-        novo_nome = novo_nome.split()# separa
-        novo_nome = ' '.join(novo_nome)# junta sem espaço a mais
-        if not novo_nome: # pega qualquer coisa, " " ou none tmb
-            raise ValueError ("Nome é obrigatório!!!")
-        self._nome = novo_nome
         
     @property
     def descricao(self):
@@ -35,6 +27,16 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
     def estado(self):
         return self._estado
     
+    @nome.setter
+    def nome(self, novo_nome):
+        if not isinstance(novo_nome, str):
+            raise TypeError ("Nome precisa ser texto!!!")
+        novo_nome = novo_nome.split()# separa
+        novo_nome = ' '.join(novo_nome)# junta sem espaço a mais
+        if not novo_nome: # pega qualquer coisa, " " ou none tmb
+            raise ValueError ("Nome é obrigatório!!!")
+        self._nome = novo_nome
+
     @descricao.setter
     def descricao(self, n_desc):
         if not isinstance(n_desc, str):
@@ -58,7 +60,7 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
         if isinstance(n_st, EstadoMissao):
             self._estado = n_st
         else:
-            raise TypeError
+            raise TypeError("Estado inválido.")
 
     def iniciar_missao (self):
         if isinstance(self.estado, EstadoPendente):
@@ -74,7 +76,7 @@ class Missao(ABC): # começar classe com maiusculo - convenção python
 
     @abstractmethod
     def concluir_missao (self, valor):
-        self.estado = self.estado.concluir(valor)
+        pass
         
     '''       # testar dps
             if self.status == Status_Missao.CONCLUIDA:

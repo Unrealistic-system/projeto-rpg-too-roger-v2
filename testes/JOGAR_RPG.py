@@ -1,11 +1,11 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from model.missao import Missao
 from model.personagem import Personagem
 from model.FactotyMissao import factoryMissao
 from model.Item import Item, Tipo_item
 from model.base import *
+from model.missao import Missao
 #from tkinter import messagebox
 
 '''
@@ -38,10 +38,16 @@ def preparar_para_missao(personagem):
     except TypeError:
         return f"entrada digitada inválida!"
 
-#missoes default
-lista_Missoes.append(factoryMissao("coleta", ))
-lista_Missoes.append(MissaoColeta("Coletar maças", "Colete maças pela montanha de olindo", 40,"Macas", 10))
-lista_Missoes.append(MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin"))
+#missoes default 
+'''
+Argumentos: tipo_missao:str, nome:str, descricao:str, recompensa
+**kwargs:
+        combate: "tipo_inimigo", "qnt_inimigos"
+        coleta: "nome_item", "quantidade"
+        exploração: "regiao_destino", "distancia_em_km", "tempo_limite"
+'''
+lista_Missoes.append(factoryMissao.criar_missao(tipo_missao="coleta",nome="Coletar maças", descricao="Colete maças pela montanha de olindo", recompensa=40, quantidade= 10, tipo_item= "maças"))
+#lista_Missoes.append(MissaoCombate("Derrotar Goblin", "Derrote os goblins da arena", 40, 50,"Goblin"))
 
 # personagens default
 lista_Personagens.append(Personagem("Chitãozinho"))

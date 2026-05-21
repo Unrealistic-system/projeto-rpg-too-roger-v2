@@ -1,15 +1,17 @@
-from model.enums import Status_Missao
 from model.missao import Missao
+from model.Status import EstadoConcluida
 
 class MissaoColeta (Missao):
-    def __init__(self, nome, descricao, recompensa, item, quantidade:int, status=Status_Missao.PENDENTE):
-        super().__init__(nome, descricao, recompensa, status)
+    def __init__(self, nome, descricao, recompensa, item, quantidade):
+        super().__init__(nome, descricao, recompensa)
+        #self._estado = EstadoPendente(self)
         self.item_necessario = item
         self.quantidade = quantidade
     
     @property 
     def item_necesario(self):
         return self.__item_necessario
+    
     @item_necesario.setter
     def item_necessario(self, it):
         if not isinstance(it, str):
@@ -32,19 +34,14 @@ class MissaoColeta (Missao):
 
     def concluir_missao (self, valor):
             super().concluir_missao(valor)
-            if isinstance(valor, int):
-                if valor >= self.quantidade:
-                    self.status = Status_Missao.CONCLUIDA
-                    return(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
-                        f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
-                else:
-                    self.status = Status_Missao.FRACASSADA
-                    return(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
-                           f"não foi atingida. Faltam {self.quantidade-valor}")
-            else:
-                return(f"Tipo de dado inválido!!")
-        
+            self.estado = self.estado.concluir(self.quantidade, valor) # type: ignore
 
+            if self.estado == EstadoConcluida:
+                print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                        f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
+            else:
+                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.item_necesario} "
+                           f"não foi atingida. Faltam {self.quantidade-valor}")      
 
     def exibir_dados(self):
         str = super().exibir_dados()
@@ -58,12 +55,8 @@ class MissaoColeta (Missao):
         return str
         # return f"{self.nome} ({self.descricao}) XP:[{self.recompensa}] [{self.status.value}]
    
-    def __eq__(self, outro:object) -> bool:
+    """ def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, MissaoColeta):
             return False
-        return (self.nome == outro.nome 
-                and self.descricao == outro.descricao 
-                and self.recompensa == outro.recompensa 
-                and self.item_necesario == outro.item_necesario 
-                and self.quantidade == outro.quantidade)
+        return (self.nome == outro.nome) """
     

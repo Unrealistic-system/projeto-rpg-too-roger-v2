@@ -1,7 +1,7 @@
-from missao import *
-from Missao_coleta import *
-from Missao_combate import *
-from Missao_exploracao import *
+from model.missao import *
+from model.Missao_coleta import *
+from model.Missao_combate import *
+from model.Missao_exploracao import *
 
 class factoryMissao():
 
@@ -39,4 +39,4 @@ class factoryMissao():
                 kwargs.get("tempo_limite")
             )
         else:
-            raise Exception("não foi possivel criar")
+            raise Exception("Não foi possivel criar Missão")

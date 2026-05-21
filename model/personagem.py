@@ -1,8 +1,7 @@
 from model.missao import Missao
-from model.enums import Status_Missao
-from model.Item import Item
+from model.Item import Item, Tipo_item
 from model.base import *
-from model.enums import Tipo_item
+from model.Status import EstadoConcluida
 
 class Personagem:
     def __init__(self, nome:str):
@@ -93,13 +92,13 @@ class Personagem:
             for m in self.__misoes:
                 if m == missao:
                     resultado = m.concluir_missao(valor)
-                    if m.status == Status_Missao.CONCLUIDA:
+                    if m.estado == EstadoConcluida:
                         self.__xp += m.recompensa
                         if self.__xp >= 20:
                             ganho_vida = self.__xp // 20
                             self.__nivel += ganho_vida
                             self.__xp = self.__xp % 20
-                    elif m.status == Status_Missao.FRACASSADA:
+                    elif m.estado == EstadoConcluida:
                         self.__reduzir_vida(10)      
                     return resultado
             raise ValueError("Missão não encontrada")

@@ -1,8 +1,11 @@
 from model.missao import Missao
+from model.Status import EstadoConcluida, EstadoPendente
+
 
 class MisssaoExploracao (Missao):
-    def __init__(self, nome, descricao, recompensa, regiao_destino:str, distancia_em_km:float, tempo_limite:int, estado):
-        super().__init__(nome, descricao, recompensa, estado)
+    def __init__(self, nome, descricao, recompensa, regiao_destino, distancia_em_km, tempo_limite):
+        super().__init__(nome, descricao, recompensa)
+        #self._estado = EstadoPendente(self)
         self.local = regiao_destino
         self.distancia = distancia_em_km
         self.tempo = tempo_limite
@@ -52,24 +55,21 @@ class MisssaoExploracao (Missao):
 
     def concluir_missao (self, valor):
             super().concluir_missao(valor)
-            if isinstance(valor, int):
-                if valor >= self.distancia:
-                    self.status = Status_Missao.CONCLUIDA
-                    print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
-                        f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
-                else:
-                    print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.distancia} "
-                          f"não foi atingida. Faltam {self.distancia-valor}")
-                    self.status = Status_Missao.FRACASSADA
+            self.estado = self.estado.concluir(self.distancia, valor) # type: ignore
+
+            if self.estado == EstadoConcluida:
+                print(f"Missão '{self.nome}' foi concluída com sucesso. A contabilidade do "
+                      f"prêmio de {self.recompensa} XP agora está pronta para retirada financeira.")
             else:
-                return(f"Tipo de dado inválido!!")
+                print(f"Missão '{self.nome}' não foi concluída, a quantidade de {self.distancia} "
+                      f"não foi atingida. Faltam {self.distancia-valor}")
 
     def __str__(self):
         str = super().__str__()
         str += f", em: {self.local} - {self.distancia} Km - {self.tempo} min."
         return str
    
-    def __eq__(self, outro:object) -> bool:
+    """ def __eq__(self, outro:object) -> bool:
         if not isinstance(outro, MisssaoExploracao):
             return False
         return (self.nome == outro.nome 
@@ -77,4 +77,4 @@ class MisssaoExploracao (Missao):
                 and self.recompensa == outro.recompensa 
                 and self.local == outro.local 
                 and self.distancia == outro.distancia
-                and self.tempo == outro.tempo)
+                and self.tempo == outro.tempo) """
